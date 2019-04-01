@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import NavTopBar from './components/nav-top-bar'
+import Pessoal from './components/Pessoas'
+import Chaves from './components/Chaves'
+import Emprestimos from './components/Emprestimos'
 
 Vue.config.productionTip = false
 
@@ -20,4 +23,25 @@ new Vue({
   router,
   components: { NavTopBar },
   template: '<NavTopBar/>'
+})
+
+new Vue({
+  el: '#pessoal',
+  router,
+  components: { Pessoal },
+  template: '<Pessoal/>'
+})
+
+new Vue({
+  el: '#chaves',
+  router,
+  components: { Chaves },
+  template: '<Chaves/>'
+})
+
+new Vue({
+  el: '#emprestimos',
+  router,
+  components: { Emprestimos },
+  template: '<Emprestimos/>'
 })

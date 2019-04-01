@@ -1,12 +1,12 @@
 <template>
-<div>
-  <nav class="navbar navbar-light bg-dark">
-  <a class="navbar-brand" href="Substituir por link da pagina Inicial">Inicio</a>
-  <a class="navbar-brand" href="Substituir pelo link da pagina de salas">Mapa de Salas</a>
-  <a class="navbar-brand" href="Cadastro de pessoal">Pessoal</a>
-  <a class="navbar-brand" href="Cadastro de novas Chaves">Chaves</a>
-  </nav>
-</div>
+    <div>
+        <nav class="navbar navbar-light bg-dark">
+            <a class="navbar-brand" href="/">Inicio</a>
+            <a class="navbar-brand" href="Substituir pelo link da pagina de salas">Mapa de Salas</a>
+            <a class="navbar-brand" href="/pessoas">Pessoal</a>
+            <a class="navbar-brand" href="Gerência de novas Chaves">Chaves</a>
+        </nav>
+    </div>
 </template>
 
 <script>

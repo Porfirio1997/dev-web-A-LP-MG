@@ -10,7 +10,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Bemvindo ao Claviculário digital'
+      msg: 'Bem vindo ao Claviculário digital'
     }
   }
 }
