@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/construcao.png">
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      msg: 'Bem vindo ao Claviculário digital'
+    }
+  }
 }
 </script>
 

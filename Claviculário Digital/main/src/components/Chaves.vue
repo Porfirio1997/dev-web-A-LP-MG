@@ -1,14 +1,14 @@
 <template>
-  <div class="GChaves">
+  <div class="Chaves">
     <h1>{{ msg }}</h1>
-            <form>
+            <form @submit.prevent="addbanco()">
                 <div class="">
-                <label for="CNumSala">N° da sala</label>
-                <input type="text" class="form-control" id="Nsala" placeholder="N° da sala">
+                <label >N° da sala</label>
+                <input type="number" class="form-control" v-model="chave.Numsala" placeholder="N° da sala">
                 </div>
                 <div class="">
-                    <label for="CNomeSala">Cargo/função</label>
-                    <input type="text" class="form-control" id="Nomsala" placeholder="Nome da sala">
+                    <label >Nome da Sala</label>
+                    <input type="text" class="form-control" v-model="chave.Nomesala" placeholder="Nome da sala">
                 </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
@@ -21,11 +21,12 @@
     </tr>
   </thead>
   <tbody>
-    <!-- <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
+    <!-- <tr v-for="chave in chaves">  Não funciona.
+      <th scope="row">#</th>
+      <td>{{item.Numsala}}</td>
+      <td>{{item.Nomesala}}</td>
+      <td v-on:click='funçãodeeditar({{c.id}})'>editar.png</td>
+      <td v-on:click='funçãodeexcluir({{c.id}})'>excluir.png</td>
     </tr> -->
   </tbody>
 </table>
@@ -39,9 +40,20 @@ export default {
   name: 'Chaves',
   data () {
     return {
+      chave : {},
+      chaves : [],
       msg: 'Gerência de chaves'
+    }},
+    methods : {
+        addbanco() {
+          console.info(this.chave)
+          chaves.append(this.chave)
+          this.chave = {}      
+        }
+
+
     }
-  }
+  
 }
 </script>
 

@@ -1,47 +1,50 @@
 <template>
-  <div class="GPessoal">
+  <div class="Pessoal">
     <h1>{{ msg }}</h1>
-          <form>
+          <form  @submit.prevent="addbanco()">
             <div class="">
               <label for="PNome">Endereço</label>
-              <input type="text" class="form-control" id="Nome" placeholder="Nome">
+              <input type="text" class="form-control" v-model="pessoa.Nome" placeholder="Nome">
             </div>
             <div class="">
                 <label for="PNumMat">Cargo/função</label>
-                <input type="text" class="form-control" id="NumMat" placeholder="N° de Matricula">
+                <input type="text" class="form-control" v-model="pessoa.NumMat" placeholder="N° de Matricula">
               </div>
             <div class="">
                 <label for="PCargo">Cargo/função</label>
-                <input type="text" class="form-control" id="Cargo" placeholder="Cargo/função">
+                <input type="text" class="form-control" v-model="pessoa.Cargo" placeholder="Cargo/função">
               </div>
             <div class="">
               <label for="PTelefone">Telefone</label>
-              <input type="tel" class="form-control" id="Telefone" placeholder="Telefone">
+              <input type="tel" class="form-control" v-model="pessoa.Telefone" placeholder="Telefone">
             </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
 
         <table class="">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">N° de Matricula</th>
-      <th scope="col">Cargo</th>
-      <th scope="col">Telefone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr> -->
-  </tbody>
-</table>
-
-
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">N° de Matricula</th>
+                <th scope="col">Cargo</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Excluir</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr v-for=" p in pessoas ">
+                <th scope="row">#</th>
+                <td>{{p.Nome}}</td>
+                <td>{{p.NumMat}}</td>
+                <td>{{p.Cargo}}</td>
+                <td>{{p.Telefone}}</td>
+                <td v-on:click='funçãodeeditar({{p.id}})'>Editar.png</td>
+                <td v-on:click='funçãodeexcluir({{p.id}})'>Excluir.png</td>
+              </tr> -->
+            </tbody>
+        </table>
   </div>
 </template>
 
@@ -50,9 +53,16 @@ export default {
   name: 'Pessoal',
   data () {
     return {
+      pessoa : {},
+      pessoas : [],
       msg: 'Gerência de pessoal'
     }
-  }
+  },
+  addbanco() {
+          console.info(this.pessoa)
+          pessoas.append(this.pessoa)
+          this.chave = {}
+        }
 }
 </script>
 

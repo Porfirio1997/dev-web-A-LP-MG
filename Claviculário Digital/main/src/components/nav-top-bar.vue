@@ -1,10 +1,11 @@
 <template>
     <div>
         <nav class="navbar navbar-light bg-dark">
-            <a class="navbar-brand" href="/">Inicio</a>
-            <a class="navbar-brand" href="Substituir pelo link da pagina de salas">Mapa de Salas</a>
-            <a class="navbar-brand" href="/pessoas">Pessoal</a>
-            <a class="navbar-brand" href="Gerência de novas Chaves">Chaves</a>
+            <p class="navbar">{{msg}}</p>
+            <a class="navbar-brand" href="/Mapa">Mapa de Salas</a>
+            <a class="navbar-brand" href="/Emprestimos">Empréstimos</a>
+            <a class="navbar-brand" href="/Pessoal">Pessoal</a>
+            <a class="navbar-brand" href="/Chaves">Chaves</a>
         </nav>
     </div>
 </template>
@@ -12,7 +13,9 @@
 <script>
 export default {
   name: 'NavTopBar',
-  data () {
+  data () { 
+      return{ msg : "Claviculário digital"
+    }
   }
 }
 </script>
@@ -71,7 +74,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
     background: rgb(42, 42, 43)
 }
 
-a {
+a , p {
     color:white;
     text-decoration: none;
     background-color: transparent;

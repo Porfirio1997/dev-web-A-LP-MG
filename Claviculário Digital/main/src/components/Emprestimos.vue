@@ -1,5 +1,5 @@
 <template>
-  <div class="Gemprestimo">
+  <div class="Emprestimo">
     <h1>{{ msg }}</h1>
           <form>
 
