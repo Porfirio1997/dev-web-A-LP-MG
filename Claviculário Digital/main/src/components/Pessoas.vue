@@ -34,15 +34,15 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr v-for=" p in pessoas ">
+              <tr v-for=" p in pessoas " :key=p.id>
                 <th scope="row">#</th>
                 <td>{{p.Nome}}</td>
                 <td>{{p.NumMat}}</td>
                 <td>{{p.Cargo}}</td>
                 <td>{{p.Telefone}}</td>
-                <td v-on:click='funçãodeeditar({{p.id}})'>Editar.png</td>
-                <td v-on:click='funçãodeexcluir({{p.id}})'>Excluir.png</td>
-              </tr> -->
+                <!-- <td v-on:click='funçãodeeditar({{p.NumMat}})'>Editar.png</td>
+                <td v-on:click='funçãodeexcluir({{p.id}})'>Excluir.png</td> -->
+              </tr>
             </tbody>
         </table>
   </div>
@@ -58,11 +58,30 @@ export default {
       msg: 'Gerência de pessoal'
     }
   },
-  addbanco() {
-          console.info(this.pessoa)
-          pessoas.append(this.pessoa)
-          this.chave = {}
-        }
+      addbanco() {
+        insert ; into ; Pessoas ; 
+        values (this.pessoa.Nome,this.chave.NumMat,this.pessoa.Cargo,this.pessoa.Telefone )
+        atualizalista();
+          },
+      listapessoas() {
+        return select * from ; Pessoas 
+          },
+      atualizalista() {
+        this.pessoas=listapessoas();
+          },
+      editarlista(id){
+        UPDATE ; Pessoas ; SET ;
+                    nome = this.pessoa.Nome,
+                    cargo = this.pessoa.Cargo ,
+                    matricula = this.pessoa.NumMat,
+                    telefone = this.pessoa.Telefone 
+                    ; WHERE ; matricula = id;
+        atualizalista()
+          },
+      deletardalista(id) {
+        DELETE ; FROM ; Pessoas ; where ; matricula = id ;
+        atualizalista()
+          }
 }
 </script>
 

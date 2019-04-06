@@ -21,13 +21,13 @@
     </tr>
   </thead>
   <tbody>
-    <!-- <tr v-for="chave in chaves">  Não funciona.
+    <tr v-for="c in chaves" :key=c.id>  Não funciona.
       <th scope="row">#</th>
-      <td>{{item.Numsala}}</td>
-      <td>{{item.Nomesala}}</td>
-      <td v-on:click='funçãodeeditar({{c.id}})'>editar.png</td>
-      <td v-on:click='funçãodeexcluir({{c.id}})'>excluir.png</td>
-    </tr> -->
+      <td>{{c.Numsala}}</td>
+      <td>{{c.Nomesala}}</td>
+      <!-- <td v-on:click='funçãodeeditar({{c.Numsala}})'>editar.png</td>
+      <td v-on:click='funçãodeexcluir({{.id}})'>excluir.png</td> -->
+    </tr>
   </tbody>
 </table>
 
@@ -46,12 +46,26 @@ export default {
     }},
     methods : {
         addbanco() {
-          console.info(this.chave)
-          chaves.append(this.chave)
-          this.chave = {}      
-        }
-
-
+          insert ; into ; Chaves ; values (this.chave.Nomesala,this.chave.Numsala )
+          atualizalista() 
+            },
+        listapessoas() {
+          return select * from ; Chaves 
+            },
+        atualizalista() {
+          this.chaves=listachaves();
+            },
+        editarlista(id){
+          UPDATE ; chaves ; SET ;
+                    numchave = this.chave.Nomesala,
+                    numerochave = this.chave.Numsala
+                    ; WHERE ; numerochave = id;
+          atualizalista()
+          },
+        deletardalista(id) {
+          DELETE ; FROM ; Chaves ; where ; numchave=id;
+          atualizalista()
+            }
     }
   
 }

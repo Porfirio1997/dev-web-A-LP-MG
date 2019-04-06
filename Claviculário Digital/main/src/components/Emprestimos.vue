@@ -4,13 +4,13 @@
           <form>
 
             <div class="">
-              <label for="ENumChave">Endereço</label>
-              <input type="text" class="form-control" id="Nome" placeholder="N° chave">
+              <label for="NumChave">Endereço</label>
+              <input type="text" class="form-control" v-model="emprestimo.numchave" placeholder="N° chave">
             </div>
             
             <div class="">
                 <label for="ENumMatricula">Cargo/função</label>
-                <input type="text" class="form-control" id="Cargo" placeholder="n° Matricula">
+                <input type="text" class="form-control" v-model="emprestimo.nummat" placeholder="n° Matricula">
             </div>
 
           <button type="submit" class="btn btn-primary">Entrar</button>
@@ -35,11 +35,14 @@
     </tr>
   </thead>
   <tbody>
-    <!-- <tr>
-      <th scope="row"></th>
-      <td></td>
-      <td></td>
-      <td></td>
+    <!-- <tr v-for=" e in emprestimos " :key=e.id>
+      <th scope="row">#</th>
+      <td>{{}}</td>
+      <td>{{p.NumMat}}</td>
+      <td>{{p.Cargo}}</td>
+      <td>{{p.Telefone}}</td>
+      <td v-on:click='funçãodeeditar({{p.NumMat}})'>Editar.png</td>
+      <td v-on:click='funçãodeexcluir({{p.id}})'>Excluir.png</td>
     </tr> -->
   </tbody>
 </table>
@@ -53,9 +56,36 @@ export default {
   name: 'Emprestimo',
   data () {
     return {
+      emprestimo,
+      emprestimos,
       msg: 'Gerência de relacionamento chave e pessoal '
     }
-  }
+  },
+      addbanco() {
+        insert ; into ; Emprestimos ; 
+        values ( this.emprestimo.nummat,this.emprestimo.numchave )
+        atualizalista();
+          },
+      listapessoas() { 
+        return select * from ; Emprestimos 
+          },
+      atualizalista() {
+        this.emprestimos=listapessoas();
+          },
+      atualizalista() {
+        this.emprestimos=listachaves();
+          },
+      editarlista(id){
+        UPDATE ; Emprestimos ; SET ;
+                    pessoamat = this.emprestimo.nummat
+                    chavenum  = this.emprestimo.chavenum
+                    ; WHERE ; ID  = id;
+        atualizalista()
+          },
+      deletardalista(id) {
+        DELETE ; FROM ; Emprestimos ; where ; ID = id ;
+        atualizalista()
+          }
 }
 </script>
 
