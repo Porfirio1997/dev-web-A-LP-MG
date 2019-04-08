@@ -46,24 +46,25 @@ export default {
     }},
     methods : {
         addbanco() {
-          insert ; into ; Chaves ; values (this.chave.Nomesala,this.chave.Numsala )
+          SQL = "INSERT INTO Chaves VALUES (?,?)",(this.chave.Nomesala,this.chave.Numsala)
+          // função de add no banco(SQL)
           atualizalista() 
             },
         listapessoas() {
-          return select * from ; Chaves 
+          SQL = "SELECT * FROM Chaves" 
+          // função de retornar do banco(SQL)
             },
         atualizalista() {
-          this.chaves=listachaves();
+          this.chaves=listapessoas();
             },
         editarlista(id){
-          UPDATE ; chaves ; SET ;
-                    numchave = this.chave.Nomesala,
-                    numerochave = this.chave.Numsala
-                    ; WHERE ; numerochave = id;
+          SQL = "UPDATE chaves SET (nome=?,numerochave=?) WHERE numerochave = ?",(this.chave.Nomesala,this.chave.Numsala,id)
+          // função de alteração do banco(SQL)
           atualizalista()
           },
         deletardalista(id) {
-          DELETE ; FROM ; Chaves ; where ; numchave=id;
+          SQL = "DELETE FROM Chaves WHERE numchave=?",id
+          // função de deletar do banco(SQL)
           atualizalista()
             }
     }
