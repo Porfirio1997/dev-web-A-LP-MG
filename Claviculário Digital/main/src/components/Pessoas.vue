@@ -36,12 +36,12 @@
             <tbody>
               <tr v-for=" p in pessoas " :key=p.id>
                 <th scope="row">#</th>
-                <td>{{p.Nome}}</td>
-                <td>{{p.NumMat}}</td>
-                <td>{{p.Cargo}}</td>
-                <td>{{p.Telefone}}</td>
-                <!-- <td v-on:click='funçãodeeditar({{p.NumMat}})'>Editar.png</td>
-                <td v-on:click='funçãodeexcluir({{p.id}})'>Excluir.png</td> -->
+                <td>{{p.NOME}}</td>
+                <td>{{p.MATRICULA}}</td>
+                <td>{{p.CARGO}}</td>
+                <td>{{p.TELEFONE}}</td>
+                <!-- <td v-on:click='alterarpessoa({{p.ID}})'>Editar.png</td>
+                <td v-on:click='deletar({{p.ID}})'>Excluir.png</td> -->
               </tr>
             </tbody>
         </table>
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+//import {criarpessoa, alterarpessoa, pegarpessoa,pegartodos,deletar, fecharconexao} from "../../static/banco"
+
 export default {
   name: 'Pessoal',
   data () {
@@ -59,27 +61,21 @@ export default {
     }
   },
       addbanco() {
-        insert ; into ; Pessoas ; 
-        values (this.pessoa.Nome,this.chave.NumMat,this.pessoa.Cargo,this.pessoa.Telefone )
+        //criarpessoa(this.pessoa.Nome,this.chave.NumMat,this.pessoa.Cargo,this.pessoa.Telefone )
         atualizalista();
           },
       listapessoas() {
-        return select * from ; Pessoas 
+        //return pegartodos("Pessoas") 
           },
       atualizalista() {
         this.pessoas=listapessoas();
           },
       editarlista(id){
-        UPDATE ; Pessoas ; SET ;
-                    nome = this.pessoa.Nome,
-                    cargo = this.pessoa.Cargo ,
-                    matricula = this.pessoa.NumMat,
-                    telefone = this.pessoa.Telefone 
-                    ; WHERE ; matricula = id;
+        //alterarpessoa(id, this.pessoa.Nome, this.pessoa.Cargo, this.pessoa.Telefone, this.pessoa.NumMat)
         atualizalista()
           },
       deletardalista(id) {
-        DELETE ; FROM ; Pessoas ; where ; matricula = id ;
+        //deletar("Pessoas",id);
         atualizalista()
           }
 }

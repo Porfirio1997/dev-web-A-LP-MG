@@ -21,12 +21,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="c in chaves" :key=c.id>  Não funciona.
+    <tr v-for="c in chaves" :key=c.id>
       <th scope="row">#</th>
-      <td>{{c.Numsala}}</td>
-      <td>{{c.Nomesala}}</td>
-      <!-- <td v-on:click='funçãodeeditar({{c.Numsala}})'>editar.png</td>
-      <td v-on:click='funçãodeexcluir({{.id}})'>excluir.png</td> -->
+      <td>{{c.NUMCHAVE}}</td>
+      <td>{{c.NOME}}</td>
+      <!-- <td v-on:click='editarlista({{c.ID}})'>editar.png</td>
+      <td v-on:click='deletardalista({{c.ID}})'>excluir.png</td> -->
     </tr>
   </tbody>
 </table>
@@ -36,35 +36,34 @@
 </template>
 
 <script>
+ // import test from "../../static/banco"
+// require('../../static/banco')
 export default {
   name: 'Chaves',
   data () {
     return {
       chave : {},
       chaves : [],
-      msg: 'Gerência de chaves'
+      msg: 'Gerênciamento de chaves'
     }},
     methods : {
         addbanco() {
-          SQL = "INSERT INTO Chaves VALUES (?,?)",(this.chave.Nomesala,this.chave.Numsala)
-          // função de add no banco(SQL)
+          //test.criarchave(this.chave.Nomesala,this.chave.Numsala)
+          this.chave={}
           atualizalista() 
             },
-        listapessoas() {
-          SQL = "SELECT * FROM Chaves" 
-          // função de retornar do banco(SQL)
+        listar() {
+          pegartodos("Chaves")
             },
         atualizalista() {
-          this.chaves=listapessoas();
+          //this.chaves=listar();
             },
         editarlista(id){
-          SQL = "UPDATE chaves SET (nome=?,numerochave=?) WHERE numerochave = ?",(this.chave.Nomesala,this.chave.Numsala,id)
-          // função de alteração do banco(SQL)
+          //alterarchave(id,this.chave.Nomesala,this.chave.Numsala)
           atualizalista()
           },
         deletardalista(id) {
-          SQL = "DELETE FROM Chaves WHERE numchave=?",id
-          // função de deletar do banco(SQL)
+         //deletar("Chaves",id)
           atualizalista()
             }
     }
