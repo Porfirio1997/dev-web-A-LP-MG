@@ -1,10 +1,16 @@
-function conectar() {
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
+
 let db = new sqlite3.Database('./claviculario.db', (err) => {
   if (err) {
     return console.error(err.message);
   }
-});}
+});
+
+function busca(sql) {
+  db.all(sql, function (err, rows) {
+    return (rows)
+    });
+  }
 
 function executar(sql) {
     db.run(sql, function (err) {
@@ -15,7 +21,7 @@ function executar(sql) {
       });
 }
 
-// close the database connection
+
 function desconectar(){
 db.close((err) => {
   if (err) {

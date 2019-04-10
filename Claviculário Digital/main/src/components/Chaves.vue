@@ -38,8 +38,9 @@
 </template>
 
 <script>
-//importar do arquivo data.js
+//import * as teste from '../../static/data.js'
 
+//importar do arquivo data.js
 export default {
   name: 'Chaves',
   data () {
