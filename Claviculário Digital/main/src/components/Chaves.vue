@@ -15,9 +15,11 @@
         <table class="">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">N° da sala</th>
-      <th scope="col">Nome da sala</th>
+      <th scope="col">  #  </th>
+      <th scope="col">  N° da sala  </th>
+      <th scope="col">  Nome da sala  </th>
+      <th scope="col">  Editar  </th>
+      <th scope="col">  Finalizar  </th>
     </tr>
   </thead>
   <tbody>
@@ -36,8 +38,8 @@
 </template>
 
 <script>
- // import test from "../../static/banco"
-// require('../../static/banco')
+//importar do arquivo data.js
+
 export default {
   name: 'Chaves',
   data () {
@@ -53,7 +55,7 @@ export default {
           atualizalista() 
             },
         listar() {
-          pegartodos("Chaves")
+          //pegartodos("Chaves")
             },
         atualizalista() {
           //this.chaves=listar();

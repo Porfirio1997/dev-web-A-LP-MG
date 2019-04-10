@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Estamos em desenvolvimento</h2>
-    <img src="../assets/logo.png"/>>
+    <img src="../assets/logo.png"/>
   </div>
 </template>
 
