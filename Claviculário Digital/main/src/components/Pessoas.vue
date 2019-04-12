@@ -1,29 +1,28 @@
 <template>
   <div class="Pessoal">
     <h1>{{ msg }}</h1>
-          <form  @submit.prevent="addbanco()">
+          <form  @submit.prevent="submeterpessoa()">
             <div class="">
-              <label for="PNome">Endereço</label>
+              <label>Nome</label>
               <input type="text" class="form-control" v-model="pessoa.Nome" placeholder="Nome">
             </div>
             <div class="">
-                <label for="PNumMat">Cargo/função</label>
+                <label>N° matricula</label>
                 <input type="text" class="form-control" v-model="pessoa.NumMat" placeholder="N° de Matricula">
               </div>
             <div class="">
-                <label for="PCargo">Cargo/função</label>
+                <label>Cargo/função</label>
                 <input type="text" class="form-control" v-model="pessoa.Cargo" placeholder="Cargo/função">
               </div>
             <div class="">
-              <label for="PTelefone">Telefone</label>
+              <label>Telefone</label>
               <input type="tel" class="form-control" v-model="pessoa.Telefone" placeholder="Telefone">
             </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
 
-        <table class="">
-            <thead>
-              <tr>
+
+        <div class="cabecalho">
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">N° de Matricula</th>
@@ -31,53 +30,64 @@
                 <th scope="col">Telefone</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Excluir</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for=" p in pessoas " :key=p.id>
-                <th scope="row">#</th>
-                <td>{{p.NOME}}</td>
-                <td>{{p.MATRICULA}}</td>
-                <td>{{p.CARGO}}</td>
-                <td>{{p.TELEFONE}}</td>
-                <!-- <td v-on:click='alterarpessoa({{p.ID}})'>Editar.png</td>
-                <td v-on:click='deletar({{p.ID}})'>Excluir.png</td> -->
-              </tr>
-            </tbody>
-        </table>
+        </div>
+
+        <div v-for="pes in pessoas" v-bind:key="pes['.key']">
+            <div v-if="!pes.edit">
+                  #
+                  {{pes.pessoa.Nome}}
+                  {{pes.pessoa.NumMat}}
+                  {{pes.pessoa.Cargo}}
+                  {{pes.pessoa.Telefone}}
+                  <button v-on:click="seteditarpessoa(pes['.key'])">editar</button>
+                  <button v-on:click="removerpessoa(pes['.key'])">excluir</button>
+            </div>
+            <div v-else>
+                  <input type="text" class="form-control" v-model="pes.pessoa.Nome" placeholder="Nome">
+                  <input type="text" class="form-control" v-model="pes.pessoa.NumMat" placeholder="N° de Matricula">
+                  <input type="text" class="form-control" v-model="pes.pessoa.Cargo" placeholder="Cargo/função">
+                  <input type="tel" class="form-control" v-model="pes.pessoa.Telefone" placeholder="Telefone">
+                  <button v-on:click="salvaredicao(pes)">salvar</button>
+                  <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button>
+            </div>
+        </div>
+      
   </div>
 </template>
 
 <script>
-//import {criarpessoa, alterarpessoa, pegarpessoa,pegartodos,deletar, fecharconexao} from "../../static/banco"
-
+import { pessoasRef } from "../firebase.js";
 export default {
   name: 'Pessoal',
   data () {
     return {
       pessoa : {},
-      pessoas : [],
       msg: 'Gerência de pessoal'
     }
   },
-      addbanco() {
-        //criarpessoa(this.pessoa.Nome,this.chave.NumMat,this.pessoa.Cargo,this.pessoa.Telefone )
-        atualizalista();
-          },
-      listapessoas() {
-        //return pegartodos("Pessoas") 
-          },
-      atualizalista() {
-        this.pessoas=listapessoas();
-          },
-      editarlista(id){
-        //alterarpessoa(id, this.pessoa.Nome, this.pessoa.Cargo, this.pessoa.Telefone, this.pessoa.NumMat)
-        atualizalista()
-          },
-      deletardalista(id) {
-        //deletar("Pessoas",id);
-        atualizalista()
-          }
+  firebase:{
+    pessoas:pessoasRef
+  },
+  methods:{
+        submeterpessoa() {
+            pessoasRef.push({pessoa:this.pessoa,edit:false})
+            this.pessoa={};
+        },
+        removerpessoa(key){
+            pessoasRef.child(key).remove();
+        },
+        seteditarpessoa(key){
+            pessoasRef.child(key).update({edit:true});
+        },
+        cancelaredicao(key){
+            pessoasRef.child(key).update({edit:false});
+        },
+        salvaredicao(obj){
+            const key=obj['.key']
+            console.log(obj)
+            pessoasRef.child(key).update({chave:obj,edit:false});
+        }
+    }
 }
 </script>
 
@@ -96,5 +106,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.cabecalho{
+  display: inline-block;
+  padding: 15px;
 }
 </style>

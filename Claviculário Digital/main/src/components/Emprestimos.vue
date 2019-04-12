@@ -56,8 +56,8 @@ export default {
   name: 'Emprestimo',
   data () {
     return {
-      emprestimo,
-      emprestimos,
+      emprestimo:{},
+      emprestimos:[],
       msg: 'Gerência de relacionamento chave e pessoal '
     }
   },
