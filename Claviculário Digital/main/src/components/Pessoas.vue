@@ -49,6 +49,7 @@
                   <input type="tel" class="form-control" v-model="pes.pessoa.Telefone" placeholder="Telefone">
                   <button v-on:click="salvaredicao(pes)">salvar</button>
                   <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button>
+                  {{pes['.key']}}
             </div>
         </div>
       
@@ -85,7 +86,7 @@ export default {
         salvaredicao(obj){
             const key=obj['.key']
             console.log(obj)
-            pessoasRef.child(key).update({chave:obj,edit:false});
+            pessoasRef.child(key).set({pessoa:obj,edit:false});
         }
     }
 }

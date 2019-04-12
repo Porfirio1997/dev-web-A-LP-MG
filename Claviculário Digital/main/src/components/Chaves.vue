@@ -69,7 +69,7 @@ export default {
         salvaredicao(obj){
             const key=obj['.key']
             console.log(obj)
-            chavesRef.child(key).update({chave:obj,edit:false});
+            chavesRef.child(key).set({chave:obj,edit:false});
         }
     }
   
