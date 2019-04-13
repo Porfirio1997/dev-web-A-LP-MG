@@ -4,14 +4,14 @@
 
           <form @submit.prevent="submeteremprestimo()">
               <label for="NumChave">N° da Chave</label>
-              <input type="text" class="form-control" v-model="Numsala" placeholder="N° chave">
+              <input type="text" class="form-control" v-model="Numchave" placeholder="N° chave">
               <label for="ENumMatricula">N° de Matricula</label>
               <input type="text" class="form-control" v-model="NumMat" placeholder="n° Matricula">
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>        
 
         <div class="cabecalho">
-            <th scope="col">N° da sala</th>
+            <th scope="col">Nome da sala</th>
             <th scope="col">Nome</th>
             <th scope="col">Horário</th>
             <th scope="col">Alterar</th>
@@ -21,21 +21,23 @@
 
         <div v-for="emp in emprestimos" v-bind:key="emp['.key']">
             <div v-if="!emp.edit">
-                  #
-                  {{emp.chave.Nomesala}}
-                  {{emp.pessoa.Nome}}
+                  {{emp.CNomesala}}
+                  {{emp.CNumchave}}
+                  {{emp.PNumMat}}
+                  {{emp.PNome}}
                   {{emp.horario}}
                   <!-- <button v-on:click="modalcontato(emp.pessoa)>Contato</button> -->
-                  <button v-on:click="seteditaremprestimo(pes['.key'])">editar</button>
-                  <button v-on:click="removeremprestimo(pes['.key'])">Finalizar</button>
+                  <button v-on:click="seteditaremprestimo(emp['.key'])">editar</button>
+                  <button v-on:click="removeremprestimo(emp['.key'])">Finalizar</button>
             </div>
             <div v-else>
-                  <input type="text" class="form-control" v-model="emp.chave.Numsala" placeholder="N° chave">
-                  <input type="text" class="form-control" v-model="emp.pessoa.NumMat" placeholder="N° de Matricula">
-                  <button v-on:click="salvaredicao(pes)">salvar</button>
-                  <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button>
+                  <input type="text" class="form-control" v-model="emp.CNumchave" placeholder="N° chave">
+                  <input type="text" class="form-control" v-model="emp.PNumMat" placeholder="N° de Matricula">
+                  <button v-on:click="salvaredicao(emp)">salvar</button>
+                  <button v-on:click="cancelaredicao(emp['.key'])">cancelar</button>
             </div>
-        </div>
+        </div>  
+  
   </div>
 </template>
 
@@ -45,7 +47,7 @@ export default {
   name: 'Emprestimos',
   data () {
     return {
-        Numsala:"",
+        Numchave:"",
         NumMat:"",
         pessoa:"",
         chave:"",
@@ -53,48 +55,57 @@ export default {
     }
   },
       firebase:{
-        chaves:chavesRef,
-        pessoas:pessoasRef,
-        emprestimos:emprestimosRef
+        chaves : chavesRef,
+        pessoas : pessoasRef,
+        emprestimos : emprestimosRef
   },
   methods:{
         buscapessoa(mat){
-          for (pes in pessoas) {
-            if(pes.NumMat===mat)
-              return pes
+          for (var pes in this.pessoas) {
+            if(this.pessoas[pes].NumMat === mat)
+              return this.pessoas[pes]
           }
           return "pessoa não cadastrada"
         },
 
         buscachave(num){
-          for (cha in chaves) {
-            if(cha.Numsala===num)
-              return cha
+          for (var cha in this.chaves) {
+            if(this.chaves[cha].Numchave === num)
+              return this.chaves[cha]
           }
           return "chave não cadastrada"
         },
 
         salvahorario(){
-            var date    = Date.now();
+            var date    = new Date();
             var hora    = date.getHours();
             var min     = date.getMinutes();
             var dia     = date.getDate();
             var mes     = date.getMonth()+1;
-            return (hora+""+min+" "+dia+"|"+mes)
+            return ( dia + "/" + mes + " - " + hora + ":" + min)
         },
         
         submeteremprestimo() {
-            pessoab = buscapessoa(this.NumMat)
-            chaveb = buscachave(this.NumChave)
-            horas = salvahorario()
-            
-            if(pessoa != "pessoa não cadastrada" && chave != "chave não cadastrada"){
-              emprestimosRef.push({pessoa:pessoab, chave:chaveb, horario:horas,edit:false})
+          var pessoab = this.buscapessoa(this.NumMat)
+          var chaveb = this.buscachave(this.Numchave)
+          var horab = this.salvahorario()
+            if(pessoab === "pessoa não cadastrada")
+              alert("pessoa não cadastrada")
+            else if(chaveb === "chave não cadastrada")
+              alert("chave não cadastrada")
+            else{
+              emprestimosRef.push({
+                                    PNome:pessoab.Nome,
+                                    PNumMat:pessoab.NumMat,
+                                    PCargo:pessoab.Cargo,
+                                    PTelefone:pessoab.Telefone,
+                                    CNomesala:chaveb.Nomesala,
+                                    CNumchave:chaveb.Numchave,
+                                    horario:horab,
+                                    edit:false})
               this.NumMat=""
-              this.NumChave=""
-            }else if(pessoa === "pessoa não cadastrada")
-              alert(pessoa)
-            else alert(chave)
+              this.Numchave=""
+            }
         },
 
         removeremprestimo(key){
@@ -110,15 +121,25 @@ export default {
         },
 
         salvaredicao(obj){
-            const key=obj['.key']
-            pessoab=buscapessoa(this.NumMat)
-            chaveb=buscachave(this.NumChave)
+            console.log(obj)
+            var pessoab = this.buscapessoa(obj.PNumMat)
+            var chaveb = this.buscachave(obj.CNumchave)
+            const key = obj['.key']
 
-            if(pessoa!="pessoa não cadastrada" && chave != "chave não cadastrada"){
-              emprestimosRef.child(key).set({pessoa:pessoab,chave:chaveb,edit:false})
-            }else if(pessoa === "pessoa não cadastrada")
-              alert(pessoa)
-            else alert(chave)
+            if(this.buscachave(obj.pessoa.PNumMat) === "pessoa não cadastrada")
+              alert("pessoa não cadastrada")
+            else if(this.buscachave(obj.chave.CNumchave)=== "chave não cadastrada")
+              alert("chave não cadastrada")
+            else{
+              emprestimosRef.child(key).set({
+                                            PNome:obj.PNome,
+                                            PNumMat:obj.PNumMat,
+                                            PCargo:obj.PCargo,
+                                            PTelefone:obj.PTelefone,
+                                            CNomesala:obj.CNomesala,
+                                            CNumchave:obj.CNumchave,
+                                            edit:false})
+            }
         }
     }
 }

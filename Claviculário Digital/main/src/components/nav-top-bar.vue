@@ -65,8 +65,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 .navbar-brand {
     flex-grow: 1;
     align-content: center;
-    padding-top: .3125rem;
-    padding-bottom: .3125rem;
+    padding:5px;
     margin-right: 1rem;
     font-size: 1.25rem;
     line-height: inherit;

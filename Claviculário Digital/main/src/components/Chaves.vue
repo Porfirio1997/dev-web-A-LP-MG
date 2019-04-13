@@ -3,8 +3,8 @@
     <h1>{{ msg }}</h1>
             <form @submit.prevent="submeterchave()">
                   <div class="">
-                    <label >N° da sala</label>
-                    <input type="number" class="form-control" v-model="Numsala" placeholder="N° da sala">
+                    <label >N° da chave</label>
+                    <input type="text" class="form-control" v-model="Numchave" placeholder="N° da sala">
                   </div>
                   <div class="">
                     <label >Nome da Sala</label>
@@ -24,13 +24,13 @@
       <div v-for="cha in chaves" v-bind:key="cha['.key']">
           <div v-if="!cha.edit">
                   #
-                  {{cha.Numsala}}
+                  {{cha.Numchave}}
                   {{cha.Nomesala}}
                   <button v-on:click="seteditarchave(cha['.key'])">editar</button>
                   <button v-on:click="removerchave(cha['.key'])">excluir</button>
           </div>
           <div v-else>
-                  <input type="text" v-model="cha.Numsala">
+                  <input type="text" v-model="cha.Numchave">
                   <input type="text" v-model="cha.Nomesala">
                   <button v-on:click="salvaredicao(cha)">salvar</button>
                   <button v-on:click="cancelaredicao(cha['.key'])">cancelar</button>
@@ -46,7 +46,7 @@ export default {
   name: 'Chaves',
   data () {
     return {
-      Numsala:"",
+      Numchave:"",
       Nomesala:"",
       msg: 'Gerênciamento de chaves'
     }},
@@ -55,7 +55,9 @@ export default {
   },
     methods : {
         submeterchave() {
-            chavesRef.push({Nomesala:this.Nomesala, Numsala:this.Numsala,edit:false})
+            chavesRef.push({Nomesala:this.Nomesala,
+                            Numchave:this.Numchave,
+                            edit:false})
             this.chave={};
         },
         removerchave(key){
@@ -69,7 +71,7 @@ export default {
         },
         salvaredicao(obj){
             const key=obj['.key']
-            chavesRef.child(key).set({Nomesala:obj.Nomesala, Numsala:obj.Numsala,edit:false});
+            chavesRef.child(key).set({Nomesala:obj.Nomesala, Numchave:obj.Numchave,edit:false});
         }
     }
   

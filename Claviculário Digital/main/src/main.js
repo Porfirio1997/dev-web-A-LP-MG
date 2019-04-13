@@ -9,6 +9,8 @@ import NavTopBar from './components/nav-top-bar'
 import Pessoal from './components/Pessoas'
 import Chaves from './components/Chaves'
 import Emprestimos from './components/Emprestimos'
+import mapaSalas from "./components/mapaSalas.vue"
+import vismapaSalas from "./components/VismapaSalas.vue";
 
 Vue.config.productionTip = false
 
@@ -48,4 +50,22 @@ new Vue({
   router,
   components: { Emprestimos },
   template: '<Emprestimos/>'
+})
+
+new Vue({
+  el: '#mapaSalas',
+  router,
+  components: {
+    mapaSalas
+  },
+  template: '<mapaSalas/>'
+})
+
+new Vue({
+  el: '#vismapaSalas',
+  router,
+  components: {
+    vismapaSalas
+  },
+  template: '<vismapaSalas/>'
 })

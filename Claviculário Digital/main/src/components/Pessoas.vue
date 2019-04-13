@@ -44,7 +44,7 @@
             </div>
             <div v-else>
                   <input type="text" class="form-control" v-model="pes.Nome" placeholder="Nome">
-                  <input type="text" class="form-control" v-model="pes.NumMat" placeholder="N° de Matricula">
+                  <input type="number" class="form-control" v-model="pes.NumMat" placeholder="N° de Matricula">
                   <input type="text" class="form-control" v-model="pes.Cargo" placeholder="Cargo/função">
                   <input type="tel" class="form-control" v-model="pes.Telefone" placeholder="Telefone">
                   <button v-on:click="salvaredicao(pes)">salvar</button>
@@ -73,7 +73,11 @@ export default {
   },
   methods:{
         submeterpessoa() {
-            pessoasRef.push({Nome:this.Nome,NumMat:this.NumMat,Cargo:this.Cargo,Telefone:this.Telefone,edit:false})
+            pessoasRef.push({Nome:this.Nome,
+                            NumMat:this.NumMat,
+                            Cargo:this.Cargo,
+                            Telefone:this.Telefone,
+                            edit:false})
             this.Nome="",
             this.Cargo="",
             this.Telefone="",
@@ -90,7 +94,11 @@ export default {
         },
         salvaredicao(obj){
             const key=obj['.key']
-            pessoasRef.child(key).set({Nome:obj.Nome,NumMat:obj.NumMat,Cargo:obj.Cargo,Telefone:obj.Telefone,edit:false});
+            pessoasRef.child(key).set({Nome:obj.Nome,
+                                        NumMat:obj.NumMat,
+                                        Cargo:obj.Cargo,
+                                        Telefone:obj.Telefone,
+                                        edit:false});
         }
     }
 }

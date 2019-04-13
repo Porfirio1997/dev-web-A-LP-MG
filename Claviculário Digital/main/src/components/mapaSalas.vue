@@ -41,8 +41,8 @@
                   {{sal.largura}}
                   {{sal.comprimento}}
                   {{sal.angulo}}
-                  <button v-on:click="seteditarsala(pes['.key'])">editar</button>
-                  <button v-on:click="removersala(pes['.key'])">Finalizar</button>
+                  <button v-on:click="seteditarsala(sal['.key'])">editar</button>
+                  <button v-on:click="removersala(sal['.key'])">Finalizar</button>
             </div>
             <div v-else>
                   {{sal.Numchave}}
@@ -62,11 +62,20 @@
 </template>
 
 <script>
-import {salasRef } from "../firebase.js";
+
+import { salasRef } from "../firebase.js";
+
 export default {
   name: 'MapaSalas',
     data ()  {
       return {
+        Numchave:"",
+        Nomesala:"",
+        posX:"",
+        posY:"",
+        largura:"",
+        comprimento:"",
+        angulo:"",
         msg: 'mapa do campus '
     }},
       firebase:{
@@ -84,7 +93,7 @@ export default {
                 angulo:this.angulo,
                 edit:false})
 
-              this.Numsala=""
+              this.Numchave=""
               this.Nomesala=""
               this.posX=""
               this.posY=""
