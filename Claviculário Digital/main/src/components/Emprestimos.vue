@@ -1,91 +1,126 @@
 <template>
   <div class="Emprestimo">
     <h1>{{ msg }}</h1>
-          <form>
 
-            <div class="">
-              <label for="NumChave">Endereço</label>
-              <input type="text" class="form-control" v-model="emprestimo.numchave" placeholder="N° chave">
-            </div>
-            
-            <div class="">
-                <label for="ENumMatricula">Cargo/função</label>
-                <input type="text" class="form-control" v-model="emprestimo.nummat" placeholder="n° Matricula">
-            </div>
-
+          <form @submit.prevent="submeteremprestimo()">
+              <label for="NumChave">N° da Chave</label>
+              <input type="text" class="form-control" v-model="Numsala" placeholder="N° chave">
+              <label for="ENumMatricula">N° de Matricula</label>
+              <input type="text" class="form-control" v-model="NumMat" placeholder="n° Matricula">
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>        
-        
-        <form>
-            <div class="">
-              <label for="ENumChaveBusca">Endereço</label>
-              <input type="text" class="form-control" id="Nome" placeholder="Nome">
+
+        <div class="cabecalho">
+            <th scope="col">N° da sala</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Horário</th>
+            <th scope="col">Alterar</th>
+            <th scope="col">Finalizar</th>
+            <th scope="col">Contato</th>
+        </div>
+
+        <div v-for="emp in emprestimos" v-bind:key="emp['.key']">
+            <div v-if="!emp.edit">
+                  #
+                  {{emp.chave.Nomesala}}
+                  {{emp.pessoa.Nome}}
+                  {{emp.horario}}
+                  <!-- <button v-on:click="modalcontato(emp.pessoa)>Contato</button> -->
+                  <button v-on:click="seteditaremprestimo(pes['.key'])">editar</button>
+                  <button v-on:click="removeremprestimo(pes['.key'])">Finalizar</button>
             </div>
-        </form>
-
-        <table class="">
-  <thead>
-    <tr>
-      <th scope="col">N° da sala</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Horário</th>
-      <th scope="col">Alterar</th>
-      <th scope="col">Finalizar</th>
-      <th scope="col">Contato</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- <tr v-for=" e in emprestimos " :key=e.id>
-      <th scope="row">#</th>
-      <td>{{}}</td>
-      <td>{{p.NumMat}}</td>
-      <td>{{p.Cargo}}</td>
-      <td>{{p.Telefone}}</td>
-      <td v-on:click='funçãodeeditar({{p.NumMat}})'>Editar.png</td>
-      <td v-on:click='funçãodeexcluir({{p.id}})'>Excluir.png</td>
-    </tr> -->
-  </tbody>
-</table>
-
-
+            <div v-else>
+                  <input type="text" class="form-control" v-model="emp.chave.Numsala" placeholder="N° chave">
+                  <input type="text" class="form-control" v-model="emp.pessoa.NumMat" placeholder="N° de Matricula">
+                  <button v-on:click="salvaredicao(pes)">salvar</button>
+                  <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button>
+            </div>
+        </div>
   </div>
 </template>
 
 <script>
+import { chavesRef,pessoasRef,emprestimosRef } from "../firebase.js";
 export default {
-  name: 'Emprestimo',
+  name: 'Emprestimos',
   data () {
     return {
-      emprestimo:{},
-      emprestimos:[],
-      msg: 'Gerência de relacionamento chave e pessoal '
+        Numsala:"",
+        NumMat:"",
+        pessoa:"",
+        chave:"",
+        msg: 'Gerência de relacionamento chave e pessoal '
     }
   },
-      addbanco() {
-        insert ; into ; Emprestimos ; 
-        values ( this.emprestimo.nummat,this.emprestimo.numchave )
-        atualizalista();
-          },
-      listapessoas() { 
-        return select * from ; Emprestimos 
-          },
-      atualizalista() {
-        this.emprestimos=listapessoas();
-          },
-      atualizalista() {
-        this.emprestimos=listachaves();
-          },
-      editarlista(id){
-        UPDATE ; Emprestimos ; SET ;
-                    pessoamat = this.emprestimo.nummat
-                    chavenum  = this.emprestimo.chavenum
-                    ; WHERE ; ID  = id;
-        atualizalista()
-          },
-      deletardalista(id) {
-        DELETE ; FROM ; Emprestimos ; where ; ID = id ;
-        atualizalista()
+      firebase:{
+        chaves:chavesRef,
+        pessoas:pessoasRef,
+        emprestimos:emprestimosRef
+  },
+  methods:{
+        buscapessoa(mat){
+          for (pes in pessoas) {
+            if(pes.NumMat===mat)
+              return pes
           }
+          return "pessoa não cadastrada"
+        },
+
+        buscachave(num){
+          for (cha in chaves) {
+            if(cha.Numsala===num)
+              return cha
+          }
+          return "chave não cadastrada"
+        },
+
+        salvahorario(){
+            var date    = Date.now();
+            var hora    = date.getHours();
+            var min     = date.getMinutes();
+            var dia     = date.getDate();
+            var mes     = date.getMonth()+1;
+            return (hora+""+min+" "+dia+"|"+mes)
+        },
+        
+        submeteremprestimo() {
+            pessoab = buscapessoa(this.NumMat)
+            chaveb = buscachave(this.NumChave)
+            horas = salvahorario()
+            
+            if(pessoa != "pessoa não cadastrada" && chave != "chave não cadastrada"){
+              emprestimosRef.push({pessoa:pessoab, chave:chaveb, horario:horas,edit:false})
+              this.NumMat=""
+              this.NumChave=""
+            }else if(pessoa === "pessoa não cadastrada")
+              alert(pessoa)
+            else alert(chave)
+        },
+
+        removeremprestimo(key){
+            emprestimosRef.child(key).remove();
+        },
+
+        seteditaremprestimo(key){
+            emprestimosRef.child(key).update({edit:true});
+        },
+        
+        cancelaredicao(key){
+            emprestimosRef.child(key).update({edit:false});
+        },
+
+        salvaredicao(obj){
+            const key=obj['.key']
+            pessoab=buscapessoa(this.NumMat)
+            chaveb=buscachave(this.NumChave)
+
+            if(pessoa!="pessoa não cadastrada" && chave != "chave não cadastrada"){
+              emprestimosRef.child(key).set({pessoa:pessoab,chave:chaveb,edit:false})
+            }else if(pessoa === "pessoa não cadastrada")
+              alert(pessoa)
+            else alert(chave)
+        }
+    }
 }
 </script>
 

@@ -4,19 +4,19 @@
           <form  @submit.prevent="submeterpessoa()">
             <div class="">
               <label>Nome</label>
-              <input type="text" class="form-control" v-model="pessoa.Nome" placeholder="Nome">
+              <input type="text" class="form-control" v-model="Nome" placeholder="Nome">
             </div>
             <div class="">
                 <label>N° matricula</label>
-                <input type="text" class="form-control" v-model="pessoa.NumMat" placeholder="N° de Matricula">
+                <input type="text" class="form-control" v-model="NumMat" placeholder="N° de Matricula">
               </div>
             <div class="">
                 <label>Cargo/função</label>
-                <input type="text" class="form-control" v-model="pessoa.Cargo" placeholder="Cargo/função">
+                <input type="text" class="form-control" v-model="Cargo" placeholder="Cargo/função">
               </div>
             <div class="">
               <label>Telefone</label>
-              <input type="tel" class="form-control" v-model="pessoa.Telefone" placeholder="Telefone">
+              <input type="tel" class="form-control" v-model="Telefone" placeholder="Telefone">
             </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
@@ -35,18 +35,18 @@
         <div v-for="pes in pessoas" v-bind:key="pes['.key']">
             <div v-if="!pes.edit">
                   #
-                  {{pes.pessoa.Nome}}
-                  {{pes.pessoa.NumMat}}
-                  {{pes.pessoa.Cargo}}
-                  {{pes.pessoa.Telefone}}
+                  {{pes.Nome}}
+                  {{pes.NumMat}}
+                  {{pes.Cargo}}
+                  {{pes.Telefone}}
                   <button v-on:click="seteditarpessoa(pes['.key'])">editar</button>
                   <button v-on:click="removerpessoa(pes['.key'])">excluir</button>
             </div>
             <div v-else>
-                  <input type="text" class="form-control" v-model="pes.pessoa.Nome" placeholder="Nome">
-                  <input type="text" class="form-control" v-model="pes.pessoa.NumMat" placeholder="N° de Matricula">
-                  <input type="text" class="form-control" v-model="pes.pessoa.Cargo" placeholder="Cargo/função">
-                  <input type="tel" class="form-control" v-model="pes.pessoa.Telefone" placeholder="Telefone">
+                  <input type="text" class="form-control" v-model="pes.Nome" placeholder="Nome">
+                  <input type="text" class="form-control" v-model="pes.NumMat" placeholder="N° de Matricula">
+                  <input type="text" class="form-control" v-model="pes.Cargo" placeholder="Cargo/função">
+                  <input type="tel" class="form-control" v-model="pes.Telefone" placeholder="Telefone">
                   <button v-on:click="salvaredicao(pes)">salvar</button>
                   <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button>
             </div>
@@ -61,8 +61,11 @@ export default {
   name: 'Pessoal',
   data () {
     return {
-      pessoa : {},
-      msg: 'Gerência de pessoal'
+      Nome:"",
+      Cargo:"",
+      Telefone:"",
+      NumMat:"",
+      msg: 'Gerência de pessoal interno'
     }
   },
   firebase:{
@@ -70,8 +73,11 @@ export default {
   },
   methods:{
         submeterpessoa() {
-            pessoasRef.push({pessoa:this.pessoa,edit:false})
-            this.pessoa={};
+            pessoasRef.push({Nome:this.Nome,NumMat:this.NumMat,Cargo:this.Cargo,Telefone:this.Telefone,edit:false})
+            this.Nome="",
+            this.Cargo="",
+            this.Telefone="",
+            this.NumMat=""
         },
         removerpessoa(key){
             pessoasRef.child(key).remove();
@@ -84,8 +90,7 @@ export default {
         },
         salvaredicao(obj){
             const key=obj['.key']
-            console.log(obj)
-            pessoasRef.child(key).update({chave:obj,edit:false});
+            pessoasRef.child(key).set({Nome:obj.Nome,NumMat:obj.NumMat,Cargo:obj.Cargo,Telefone:obj.Telefone,edit:false});
         }
     }
 }

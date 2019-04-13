@@ -4,11 +4,11 @@
             <form @submit.prevent="submeterchave()">
                   <div class="">
                     <label >N° da sala</label>
-                    <input type="number" class="form-control" v-model="chave.Numsala" placeholder="N° da sala">
+                    <input type="number" class="form-control" v-model="Numsala" placeholder="N° da sala">
                   </div>
                   <div class="">
                     <label >Nome da Sala</label>
-                    <input type="text" class="form-control" v-model="chave.Nomesala" placeholder="Nome da sala">
+                    <input type="text" class="form-control" v-model="Nomesala" placeholder="Nome da sala">
                   </div>
               <button type="submit" class="btn btn-primary">Entrar</button>
             </form>
@@ -24,14 +24,14 @@
       <div v-for="cha in chaves" v-bind:key="cha['.key']">
           <div v-if="!cha.edit">
                   #
-                  {{cha.chave.Numsala}}
-                  {{cha.chave.Nomesala}}
+                  {{cha.Numsala}}
+                  {{cha.Nomesala}}
                   <button v-on:click="seteditarchave(cha['.key'])">editar</button>
                   <button v-on:click="removerchave(cha['.key'])">excluir</button>
           </div>
           <div v-else>
-                  <input type="text" v-model="cha.chave.Numsala">
-                  <input type="text" v-model="cha.chave.Nomesala">
+                  <input type="text" v-model="cha.Numsala">
+                  <input type="text" v-model="cha.Nomesala">
                   <button v-on:click="salvaredicao(cha)">salvar</button>
                   <button v-on:click="cancelaredicao(cha['.key'])">cancelar</button>
           </div>
@@ -46,7 +46,8 @@ export default {
   name: 'Chaves',
   data () {
     return {
-      chave : {Numsala:0,Nomesala:"recepcao"},
+      Numsala:"",
+      Nomesala:"",
       msg: 'Gerênciamento de chaves'
     }},
     firebase:{
@@ -54,7 +55,7 @@ export default {
   },
     methods : {
         submeterchave() {
-            chavesRef.push({chave:this.chave,edit:false})
+            chavesRef.push({Nomesala:this.Nomesala, Numsala:this.Numsala,edit:false})
             this.chave={};
         },
         removerchave(key){
@@ -68,13 +69,11 @@ export default {
         },
         salvaredicao(obj){
             const key=obj['.key']
-            console.log(obj)
-            chavesRef.child(key).update({chave:obj,edit:false});
+            chavesRef.child(key).set({Nomesala:obj.Nomesala, Numsala:obj.Numsala,edit:false});
         }
     }
   
 }
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
