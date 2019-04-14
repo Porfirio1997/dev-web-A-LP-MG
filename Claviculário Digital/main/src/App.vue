@@ -1,63 +1,28 @@
 <template>
   <div id="app">
-    <div>
-      <label>Name:</label>
-      <input type="text" v-model="nome"/>
-      <button @click="submeternome()">add</button>
-    </div>
-          <div>
-            <ul>
-                <li v-for="nomepessoa in nomes" v-bind:key="nomepessoa['.key']" >
-                  <div v-if="!nomepessoa.edit">
-                    {{nomepessoa.name}}
-                    <button v-on:click="seteditarnome(nomepessoa['.key'])">editar</button>
-                    <button v-on:click="removernome(nomepessoa['.key'])">excluir</button>
-                  </div>
-                  <div v-else>
-                      <input type="text" v-model="nomepessoa.name">
-                      <button v-on:click="salvaredicao(nomepessoa)">salvar</button>
-                      <button v-on:click="cancelaredicao(nomepessoa['.key'])">cancelar</button>
-                  </div>
-                </li>
-            </ul>
-          </div>
-
-
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { namesRef } from "./firebase.js";
+import Pessoas from '@/components/Pessoas'
+import Chaves from '@/components/Chaves'
+import Emprestimos from '@/components/Emprestimos'
+import mapaSalas from '@/components/mapaSalas.vue'
+import vismapaSalas from '@/components/VismapaSalas.vue'
 
 export default {
   name: 'App',
   data () {
     return {
-      nome:'picoras'
     }
   },
-  firebase:{
-    nomes:namesRef
-  },
-  methods:{
-    submeternome() {
-        namesRef.push({name:this.nome,edit:false})
-        this.nome="";
-    },
-    removernome(key){
-        namesRef.child(key).remove();
-    },
-    seteditarnome(key){
-        namesRef.child(key).update({edit:true});
-    },
-    cancelaredicao(key){
-        namesRef.child(key).update({edit:false});
-    },
-    salvaredicao(person){
-        const key=person['.key']
-        namesRef.child(key).set({name:person.name,edit:false});
-    }
+  components:{
+    'Pessoas':Pessoas,
+    'Chaves':Chaves,
+    'Emprestimos':Emprestimos,
+    'mapaSalas':mapaSalas,
+    'vismapaSalas':vismapaSalas
   }
 }
 </script>

@@ -2,10 +2,10 @@
     <div>
         <nav class="navbar navbar-light bg-dark">
             <p class="navbar">{{msg}}</p>
-            <a class="navbar-brand" href="/Mapa">Mapa de Salas</a>
-            <a class="navbar-brand" href="/Emprestimos">Empréstimos</a>
-            <a class="navbar-brand" href="/Pessoal">Pessoal</a>
-            <a class="navbar-brand" href="/Chaves">Chaves</a>
+            <a class="navbar-brand bg-dark botao " href="#/vismapasala">Mapa de Salas</a>
+            <a class="navbar-brand bg-dark botao" href="#/Emprestimos">Empréstimos</a>
+            <a class="navbar-brand bg-dark botao" href="#/Pessoas">Pessoal</a>
+            <a class="navbar-brand bg-dark botao" href="#/Chaves">Chaves</a>
         </nav>
     </div>
 </template>
@@ -14,7 +14,7 @@
 export default {
   name: 'NavTopBar',
   data () { 
-      return{ msg : "Claviculário digital"
+      return{ msg : "IFCE - campus Aracati"
     }
   }
 }
@@ -180,5 +180,8 @@ button, input, optgroup, select, textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+}
+.botao{
+    border: 2px solid #495057 
 }
 </style>

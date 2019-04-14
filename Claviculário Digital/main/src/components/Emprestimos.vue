@@ -1,43 +1,60 @@
 <template>
   <div class="Emprestimo">
     <h1>{{ msg }}</h1>
-
+        
+        <div id="area">
           <form @submit.prevent="submeteremprestimo()">
               <label for="NumChave">N° da Chave</label>
               <input type="text" class="form-control" v-model="Numchave" placeholder="N° chave">
               <label for="ENumMatricula">N° de Matricula</label>
               <input type="text" class="form-control" v-model="NumMat" placeholder="n° Matricula">
-          <button type="submit" class="btn btn-primary">Entrar</button>
-        </form>        
-
-        <div class="cabecalho">
-            <th scope="col">Nome da sala</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Horário</th>
-            <th scope="col">Alterar</th>
-            <th scope="col">Finalizar</th>
-            <th scope="col">Contato</th>
+            <button type="submit" class="form-submit-button">Entrar</button>
+          </form>        
         </div>
 
-        <div v-for="emp in emprestimos" v-bind:key="emp['.key']">
-            <div v-if="!emp.edit">
-                  {{emp.CNomesala}}
-                  {{emp.CNumchave}}
-                  {{emp.PNumMat}}
-                  {{emp.PNome}}
-                  {{emp.horario}}
-                  <!-- <button v-on:click="modalcontato(emp.pessoa)>Contato</button> -->
-                  <button v-on:click="seteditaremprestimo(emp['.key'])">editar</button>
-                  <button v-on:click="removeremprestimo(emp['.key'])">Finalizar</button>
-            </div>
-            <div v-else>
-                  <input type="text" class="form-control" v-model="emp.CNumchave" placeholder="N° chave">
-                  <input type="text" class="form-control" v-model="emp.PNumMat" placeholder="N° de Matricula">
-                  <button v-on:click="salvaredicao(emp)">salvar</button>
-                  <button v-on:click="cancelaredicao(emp['.key'])">cancelar</button>
-            </div>
-        </div>  
-  
+
+      <div class="cabecalho">
+              <th class="col1">Nome da sala</th>
+              <th class="col2">Nome</th>
+              <th class="col3">Horário</th>
+              <th class="col4">Contato</th>
+              <th class="col5">Alterar</th>
+              <th class="col6">Finalizar</th>
+
+          <div v-for="emp in emprestimos" v-bind:key="emp['.key']">
+              <div v-if="!emp.edit">
+                    <th class="el1">{{emp.CNomesala}}</th>
+                    <th class="el2">{{emp.PNome}}</th>
+                    <th class="el3">{{emp.horario}}</th>
+                    <th class="el4" v-on:click="modalcontato(emp)">
+                        <img src="../assets/contato.png" >
+                    </th>
+                    <th class="el5" v-on:click="seteditaremprestimo(emp['.key'])">
+                      <img src="../assets/editar.png" >
+                    </th>
+                    <th class="el6" v-on:click="removeremprestimo(emp['.key'])">
+                      <img src="../assets/apagar.png">
+                    </th>
+                    <!-- <button v-on:click="modalcontato(emp.pessoa)>Contato</button>
+                    <button v-on:click="seteditaremprestimo(emp['.key'])">editar</button>
+                    <button v-on:click="removeremprestimo(emp['.key'])">Finalizar</button> -->
+              </div>
+              <div v-else>
+                    <label for="NumChave">N° da Chave</label>
+                    <input type="text" class="form-control" v-model="emp.CNumchave" placeholder="N° chave">
+                    <label for="ENumMatricula">N° de Matricula</label>
+                    <input type="text" class="form-control" v-model="emp.PNumMat" placeholder="N° de Matricula">
+                    <th class="el5" v-on:click="cancelaredicao(emp['.key'])">
+                      <img src="../assets/cancelar.png" >
+                    </th>
+                    <th class="el6" v-on:click="salvaredicao(emp)">
+                      <img src="../assets/salvar.png">
+                    </th>
+                    <!-- <button v-on:click="salvaredicao(emp)">salvar</button>
+                    <button v-on:click="cancelaredicao(emp['.key'])">cancelar</button> -->
+              </div>
+          </div>  
+        </div>
   </div>
 </template>
 
@@ -60,6 +77,16 @@ export default {
         emprestimos : emprestimosRef
   },
   methods:{
+        modalcontato(emp){
+            var nom = emp.PNome
+            var tel = emp.PTelefone
+            var car = emp.PCargo
+            alert(
+                "Nome : "+nom+
+                "\n Cargo : "+car+
+                "\n telefone : "+tel           
+                )
+        },
         buscapessoa(mat){
           for (var pes in this.pessoas) {
             if(this.pessoas[pes].NumMat === mat)
@@ -109,6 +136,7 @@ export default {
         },
 
         removeremprestimo(key){
+          if(this.confirma())
             emprestimosRef.child(key).remove();
         },
 
@@ -121,17 +149,16 @@ export default {
         },
 
         salvaredicao(obj){
-            console.log(obj)
             var pessoab = this.buscapessoa(obj.PNumMat)
             var chaveb = this.buscachave(obj.CNumchave)
             const key = obj['.key']
 
-            if(this.buscachave(obj.pessoa.PNumMat) === "pessoa não cadastrada")
+            if(pessoab === "pessoa não cadastrada")
               alert("pessoa não cadastrada")
-            else if(this.buscachave(obj.chave.CNumchave)=== "chave não cadastrada")
+            else if(chaveb === "chave não cadastrada")
               alert("chave não cadastrada")
             else{
-              emprestimosRef.child(key).set({
+              emprestimosRef.child(key).update({
                                             PNome:obj.PNome,
                                             PNumMat:obj.PNumMat,
                                             PCargo:obj.PCargo,
@@ -140,7 +167,11 @@ export default {
                                             CNumchave:obj.CNumchave,
                                             edit:false})
             }
-        }
+        },
+        confirma(){
+            return confirm("Confirmar!");
+            
+          }
     }
 }
 </script>
@@ -161,4 +192,110 @@ li {
 a {
   color: #42b983;
 }
+
+img{
+  height: 30px;
+  width: 30px;
+  color: black
+}
+
+#area
+{
+  position:relative;
+  left:37%;
+  top:29%;
+  width:320px;
+  height:150px;
+}
+#area #formulario
+{
+  position:absolute;
+  display:block;   
+}
+
+.form-submit-button{
+background: #42b983;
+color: white;
+height: 30px;
+width: 60px;
+position: relative;
+left : 40%;
+font: bold 15px arial, sans-serif;
+text-shadow:none;
+}
+
+.col1{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+.col2{
+  position:relative;
+  height: 30px;
+  width: 50px;
+}
+
+.col3{
+  position:relative;
+  height: 30px;
+  width: 200px;
+}
+
+.col4{
+  position:relative;
+  height: 30px;
+  width: 100px;
+}
+
+.col5{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+.col6{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+
+.el1{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+.el2{
+  position:relative;
+  height: 30px;
+  width: 50px;
+}
+
+.el3{
+  position:relative;
+  height: 30px;
+  width: 200px;
+}
+
+.el4{
+  position:relative;
+  height: 30px;
+  width: 100px;
+}
+
+.el5{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+.el6{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+
 </style>

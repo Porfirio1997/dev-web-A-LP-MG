@@ -1,6 +1,8 @@
 <template>
   <div class="Pessoal">
     <h1>{{ msg }}</h1>
+
+        <div id="area">
           <form  @submit.prevent="submeterpessoa()">
             <div class="">
               <label>Nome</label>
@@ -18,40 +20,50 @@
               <label>Telefone</label>
               <input type="tel" class="form-control" v-model="Telefone" placeholder="Telefone">
             </div>
-          <button type="submit" class="btn btn-primary">Entrar</button>
+          <button type="submit" class="form-submit-button">salvar</button>
         </form>
+      </div>
 
 
-        <div class="cabecalho">
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">N° de Matricula</th>
-                <th scope="col">Cargo</th>
-                <th scope="col">Telefone</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Excluir</th>
-        </div>
+      <div class="cabecalho">
+                <th class="col1">#</th>
+                <th class="col2">Nome</th>
+                <th class="col3">N° de Matricula</th>
+                <th class="col4">Cargo/função</th>
+                <th class="col5">Telefone</th>
+                <th class="col6">Editar</th>
+                <th class="col7">Excluir</th>
 
         <div v-for="pes in pessoas" v-bind:key="pes['.key']">
-            <div v-if="!pes.edit">
-                  #
-                  {{pes.Nome}}
-                  {{pes.NumMat}}
-                  {{pes.Cargo}}
-                  {{pes.Telefone}}
-                  <button v-on:click="seteditarpessoa(pes['.key'])">editar</button>
-                  <button v-on:click="removerpessoa(pes['.key'])">excluir</button>
+            <div v-if="!pes.edit" class="celula">
+                <th class="el1">#</th>
+                <th class="el2">{{pes.Nome}}</th>
+                <th class="el3">{{pes.NumMat}}</th>
+                <th class="el4">{{pes.Cargo}}</th>
+                <th class="el5">{{pes.Telefone}}</th>
+                <th class="el6" v-on:click="seteditarpessoa(pes['.key'])">
+                  <img src="../assets/editar.png" >
+                </th>
+                <th class="el7" v-on:click="removerpessoa(pes['.key'])">
+                  <img src="../assets/apagar.png">
+                </th>
             </div>
-            <div v-else>
-                  <input type="text" class="form-control" v-model="pes.Nome" placeholder="Nome">
-                  <input type="number" class="form-control" v-model="pes.NumMat" placeholder="N° de Matricula">
-                  <input type="text" class="form-control" v-model="pes.Cargo" placeholder="Cargo/função">
-                  <input type="tel" class="form-control" v-model="pes.Telefone" placeholder="Telefone">
-                  <button v-on:click="salvaredicao(pes)">salvar</button>
-                  <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button>
+            <div v-else class="celula">
+                <th class="el2"><input type="text" class="form-control" v-model="pes.Nome" placeholder="Nome"></th>
+                <th class="el3"><input type="number" class="form-control" v-model="pes.NumMat" placeholder="N° de Matricula"></th>
+                <th class="el4"> <input type="text" class="form-control" v-model="pes.Cargo" placeholder="Cargo/função"></th>
+                <th class="el5">  <input type="tel" class="form-control" v-model="pes.Telefone" placeholder="Telefone"></th>
+                <th class="el6" v-on:click="cancelaredicao(pes['.key'])">
+                  <img src="../assets/cancelar.png" >
+                </th>
+                <th class="el7" v-on:click="salvaredicao(pes)">
+                  <img src="../assets/salvar.png">
+                </th>
+                  <!-- <button v-on:click="salvaredicao(pes)">salvar</button>
+                  <button v-on:click="cancelaredicao(pes['.key'])">cancelar</button> -->
             </div>
         </div>
-      
+      </div>
   </div>
 </template>
 
@@ -84,6 +96,7 @@ export default {
             this.NumMat=""
         },
         removerpessoa(key){
+          if(this.confirma())
             pessoasRef.child(key).remove();
         },
         seteditarpessoa(key){
@@ -99,7 +112,11 @@ export default {
                                         Cargo:obj.Cargo,
                                         Telefone:obj.Telefone,
                                         edit:false});
-        }
+        },
+        confirma(){
+            return confirm("Confirmar!");
+            
+          }
     }
 }
 </script>
@@ -120,8 +137,128 @@ li {
 a {
   color: #42b983;
 }
+
+img{
+  height: 30px;
+  width: 30px;
+  color: black
+}
 .cabecalho{
   display: inline-block;
   padding: 15px;
+  background-color: darkgray;
+  margin : 10px
+}
+
+#area
+{
+  position:relative;
+  left:37%;
+  top:29%;
+  width:320px;
+  height:250px;
+}
+#area #formulario
+{
+  position:absolute;
+  display:block;   
+
+}
+
+.col1{
+  position:relative;
+  height: 30px;
+  width: 50px;
+}
+.col2{
+  position:relative;
+  height: 30px;
+  width: 50px;
+}
+.col3{
+  position:relative;
+  height: 30px;
+  width: 200px;
+}
+.col4{
+  position:relative;
+  height: 30px;
+  width: 100px;
+}
+.col5{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+.col6{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+.col7{
+  position:relative;
+  height: 30px;
+  width: 150px;
+}
+
+.el1{
+  position:relative;
+  height: 25px;
+  width: 50px;
+  vertical-align: middle
+}
+.el2{
+  position:relative;
+  height: 25px;
+  width: 50px;
+  vertical-align: middle
+}
+.el3{
+  position:relative;
+  height: 25px;
+  width: 200px;
+  vertical-align: middle
+}
+.el4{
+  position:relative;
+  height: 25px;
+  width: 100px;
+  vertical-align: middle
+}
+.el5{
+  position:relative;
+  height: 25px;
+  width: 150px;
+  vertical-align: middle
+  
+}
+
+.el6{
+  position:relative;
+  height: 30px;
+  width: 150px;
+  vertical-align: middle
+}
+.el7{
+  position:relative;
+  height: 30px;
+  width: 150px;
+  vertical-align: middle
+}
+
+.celula{
+    border: 1px solid black;
+    padding: 5px
+    }
+
+.form-submit-button{
+background: #42b983;
+color: white;
+height: 30px;
+width: 60px;
+position: relative;
+left : 40%;
+font: bold 15px arial, sans-serif;
+text-shadow:none;
 }
 </style>

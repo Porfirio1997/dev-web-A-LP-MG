@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ msg }}</h1>
+        <div id='area'>
           <form @submit.prevent="submetersala()">
               <label>numero da chave</label>
               <input type="text" class="form-control" v-model="Numchave" placeholder="N° da chave">
@@ -18,44 +19,44 @@
               <input type="text" class="form-control" v-model="angulo" placeholder="angulação da sala">
             <button type="submit" class="btn btn-primary">Entrar</button>
           </form>        
-
-        <div class="cabecalho">
-            <th scope="col">N° da chave</th>
-            <th scope="col">Nome da sala</th>
-            <th scope="col">posição X</th>
-            <th scope="col">posição Y</th>
-            <th scope="col">largura</th>
-            <th scope="col">comprimento</th>
-            <th scope="col">angulo</th>
-            <th scope="col">editar</th>
-            <th scope="col">Finalizar</th>
         </div>
+            <div class="cabecalho">
+                <th scope="col">N° da chave</th>
+                <th scope="col">Nome da sala</th>
+                <th scope="col">posição X</th>
+                <th scope="col">posição Y</th>
+                <th scope="col">largura</th>
+                <th scope="col">comprimento</th>
+                <th scope="col">angulo</th>
+                <th scope="col">editar</th>
+                <th scope="col">Finalizar</th>
+            </div>
 
-        <div v-for="sal in salas" v-bind:key="sal['.key']">
-            <div v-if="!sal.edit">
-                  #
-                  {{sal.Numchave}}
-                  {{sal.Nomesala}}
-                  {{sal.posX}}
-                  {{sal.posY}}
-                  {{sal.largura}}
-                  {{sal.comprimento}}
-                  {{sal.angulo}}
-                  <button v-on:click="seteditarsala(sal['.key'])">editar</button>
-                  <button v-on:click="removersala(sal['.key'])">Finalizar</button>
+            <div v-for="sal in salas" v-bind:key="sal['.key']">
+                <div v-if="!sal.edit">
+                      #
+                      {{sal.Numchave}}
+                      {{sal.Nomesala}}
+                      {{sal.posX}}
+                      {{sal.posY}}
+                      {{sal.largura}}
+                      {{sal.comprimento}}
+                      {{sal.angulo}}
+                      <button v-on:click="seteditarsala(sal['.key'])">editar</button>
+                      <button v-on:click="removersala(sal['.key'])">Finalizar</button>
+                </div>
+                <div v-else>
+                      {{sal.Numchave}}
+                      {{sal.Nomesala}}
+                      <input type="text" class="form-control" v-model="sal.posX" placeholder="posição X">
+                      <input type="text" class="form-control" v-model="sal.posY" placeholder="posição Y">
+                      <input type="text" class="form-control" v-model="sal.largura" placeholder="largura da sala">
+                      <input type="text" class="form-control" v-model="sal.comprimento" placeholder="comprimento da sala">
+                      <input type="text" class="form-control" v-model="sal.angulo" placeholder="angulação da sala">
+                      <button v-on:click="salvaredicao(sal)">salvar</button>
+                      <button v-on:click="cancelaredicao(sal['.key'])">cancelar</button>
+                </div>
             </div>
-            <div v-else>
-                  {{sal.Numchave}}
-                  {{sal.Nomesala}}
-                  <input type="text" class="form-control" v-model="sal.posX" placeholder="posição X">
-                  <input type="text" class="form-control" v-model="sal.posY" placeholder="posição Y">
-                  <input type="text" class="form-control" v-model="sal.largura" placeholder="largura da sala">
-                  <input type="text" class="form-control" v-model="sal.comprimento" placeholder="comprimento da sala">
-                  <input type="text" class="form-control" v-model="sal.angulo" placeholder="angulação da sala">
-                  <button v-on:click="salvaredicao(sal)">salvar</button>
-                  <button v-on:click="cancelaredicao(sal['.key'])">cancelar</button>
-            </div>
-        </div>
 
 
   </div>
@@ -146,6 +147,19 @@ li {
 }
 a {
   color: #42b983;
+}
+#area
+{
+  position:relative;
+  left:37%;
+  top:29%;
+  width:320px;
+  height:450px;
+}
+#area #formulario
+{
+  position:absolute;
+  display:block;   
 }
 </style>
 

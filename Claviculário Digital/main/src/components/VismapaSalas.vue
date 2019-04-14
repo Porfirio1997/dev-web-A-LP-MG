@@ -1,19 +1,35 @@
 <template>
   <div>
     <h1>{{msg}}</h1>
-        <div v-for="sal in salas" v-bind:key="sal['.key']">
+    <!--<div class="mapa">
+          <div v-for="sal in salas" v-bind:key="sal['.key']">
             <div v-if="buscachave(sal.Numchave)" class="ocupada">
                 {{sal.Nomesala}}
             </div>
             <div v-else class="livre">
                 {{sal.Nomesala}}
             </div>
+          </div>
+        </div> -->
+        <div class="mapa">
+          <div v-for="cha in chaves" v-bind:key="cha['.key']">
+              <!-- <div v-if="buscachave(cha.Numchave)" class="ocupada" @click="horario(cha)> -->
+              <div v-if="buscachave(cha.Numchave)" class="ocupada">
+                  {{cha.Numchave}} 
+                  {{cha.Nomesala}}
+              </div>
+              <!-- <div v-else class="livre" @click="horario(cha)> -->
+              <div v-else class="livre" >
+                  {{cha.Numchave}} 
+                  {{cha.Nomesala}}
+              </div>
+          </div>
         </div>
   </div>
 </template>
 
 <script>
-import { salasRef,emprestimosRef } from "../firebase.js";
+import { chavesRef,salasRef,emprestimosRef } from "../firebase.js";
 export default {
   name: 'vismapaSalas',
   data () {
@@ -22,6 +38,7 @@ export default {
     }},
     firebase:{
     salas:salasRef,
+    chaves:chavesRef,
     emprestimos:emprestimosRef
   },
     methods : {
@@ -32,44 +49,56 @@ export default {
               return true
           }
           return false
-        },
-        modalhorariosala(obj){
-
         }
     }
-  
+
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
-}
+  display:flex
+  }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
 
 div.ocupada {
- width:40px;
- height:40px;
- border: 25px solid;
- border-color: #f00;
- align-content: center;
+  width: 60px;
+  height: 60px;
+  border: 2px solid black ;
+  margin: 2px;
+  background: #ff4040;
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
  }
  
+
 div.livre {
- width:40px;
- height:40px;
- border: 25px solid;
- border-color: #0f0;
- align-content: center;
+  width: 60px;
+  height: 60px;
+  border: 2px solid black ;
+  margin: 2px;
+  background: #84fa84 ;
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+ }
+
+ div.mapa{
+   display: inline-flex;
  }
 </style>
