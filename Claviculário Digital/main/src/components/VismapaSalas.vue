@@ -44,7 +44,6 @@ export default {
     methods : {
         buscachave(num){
           for (var emp in this.emprestimos) {
-              console.log(emp)
             if(this.emprestimos[emp].CNumchave === num)
               return true
           }

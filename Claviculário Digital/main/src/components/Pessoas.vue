@@ -84,7 +84,17 @@ export default {
     pessoas:pessoasRef
   },
   methods:{
+        buscapessoa(mat){
+          for (var pes in this.pessoas) {
+            if(this.pessoas[pes].NumMat === mat)
+              return this.pessoas[pes]
+          }
+          return "matricula não cadastrada"
+        },
         submeterpessoa() {
+          var pessoab = this.buscapessoa(this.NumMat)
+
+          if(pessoab === "matricula não cadastrada"){
             pessoasRef.push({Nome:this.Nome,
                             NumMat:this.NumMat,
                             Cargo:this.Cargo,
@@ -93,7 +103,8 @@ export default {
             this.Nome="",
             this.Cargo="",
             this.Telefone="",
-            this.NumMat=""
+            this.NumMat=""}
+          else alert("matricula já cadastrada")
         },
         removerpessoa(key){
           if(this.confirma())
@@ -107,7 +118,7 @@ export default {
         },
         salvaredicao(obj){
             const key=obj['.key']
-            pessoasRef.child(key).set({Nome:obj.Nome,
+            pessoasRef.child(key).update({Nome:obj.Nome,
                                         NumMat:obj.NumMat,
                                         Cargo:obj.Cargo,
                                         Telefone:obj.Telefone,

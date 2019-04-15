@@ -15,8 +15,7 @@
             </form>
           </div>
 
-        <div>
-            <div class="cabecalho">
+          <div class="cabecalho">
               <th class="col1">  #  </th>
               <th class="col2">  N° da sala  </th>
               <th class="col3">  Nome da sala  </th>
@@ -49,7 +48,6 @@
                   </div>
               </div>
         </div>
-      </div>
 
   </div>
 </template>
@@ -68,11 +66,25 @@ export default {
     chaves:chavesRef
   },
     methods : {
+        buscachave(num){
+          for (var cha in this.chaves) {
+            if(this.chaves[cha].Numchave === num)
+              return this.chaves[cha]
+          }
+          return "chave não cadastrada"
+        },
         submeterchave() {
-            chavesRef.push({Nomesala:this.Nomesala,
+            var chaveb = this.buscachave(this.Numchave)
+            if(chaveb === "chave não cadastrada")
+              {
+                chavesRef.push({Nomesala:this.Nomesala,
                             Numchave:this.Numchave,
                             edit:false})
-            this.chave={};
+                this.chave={};
+              }
+            else 
+              alert("chave já cadastrada")
+            
         },
         removerchave(key){
           if(this.confirma())
@@ -117,6 +129,7 @@ img{
   width: 30px;
   color: black
 }
+
 .cabecalho{
   display: inline-block;
   padding: 15px;

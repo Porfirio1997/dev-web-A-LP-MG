@@ -22,7 +22,7 @@
               <th class="col6">Finalizar</th>
 
           <div v-for="emp in emprestimos" v-bind:key="emp['.key']">
-              <div v-if="!emp.edit">
+              <div v-if="!emp.edit" class="celula">
                     <th class="el1">{{emp.CNomesala}}</th>
                     <th class="el2">{{emp.PNome}}</th>
                     <th class="el3">{{emp.horario}}</th>
@@ -39,7 +39,7 @@
                     <button v-on:click="seteditaremprestimo(emp['.key'])">editar</button>
                     <button v-on:click="removeremprestimo(emp['.key'])">Finalizar</button> -->
               </div>
-              <div v-else>
+              <div v-else class="celula">
                     <label for="NumChave">N° da Chave</label>
                     <input type="text" class="form-control" v-model="emp.CNumchave" placeholder="N° chave">
                     <label for="ENumMatricula">N° de Matricula</label>
@@ -92,9 +92,8 @@ export default {
             if(this.pessoas[pes].NumMat === mat)
               return this.pessoas[pes]
           }
-          return "pessoa não cadastrada"
+          return "matricula não cadastrada"
         },
-
         buscachave(num){
           for (var cha in this.chaves) {
             if(this.chaves[cha].Numchave === num)
@@ -102,7 +101,6 @@ export default {
           }
           return "chave não cadastrada"
         },
-
         salvahorario(){
             var date    = new Date();
             var hora    = date.getHours();
@@ -116,8 +114,9 @@ export default {
           var pessoab = this.buscapessoa(this.NumMat)
           var chaveb = this.buscachave(this.Numchave)
           var horab = this.salvahorario()
-            if(pessoab === "pessoa não cadastrada")
-              alert("pessoa não cadastrada")
+          
+            if(pessoab === "matricula não cadastrada")
+              alert("matricula não cadastrada")
             else if(chaveb === "chave não cadastrada")
               alert("chave não cadastrada")
             else{
@@ -153,8 +152,8 @@ export default {
             var chaveb = this.buscachave(obj.CNumchave)
             const key = obj['.key']
 
-            if(pessoab === "pessoa não cadastrada")
-              alert("pessoa não cadastrada")
+            if(pessoab === "matricula não cadastrada")
+              alert("matricula não cadastrada")
             else if(chaveb === "chave não cadastrada")
               alert("chave não cadastrada")
             else{
@@ -213,6 +212,11 @@ img{
   display:block;   
 }
 
+.celula{
+    border: 1px solid black;
+    padding: 5px
+    }
+
 .form-submit-button{
 background: #42b983;
 color: white;
@@ -228,36 +232,42 @@ text-shadow:none;
   position:relative;
   height: 30px;
   width: 150px;
+  vertical-align:middle
 }
 
 .col2{
   position:relative;
   height: 30px;
   width: 50px;
+  vertical-align:middle
 }
 
 .col3{
   position:relative;
   height: 30px;
   width: 200px;
+  vertical-align:middle
 }
 
 .col4{
   position:relative;
   height: 30px;
   width: 100px;
+  vertical-align:middle
 }
 
 .col5{
   position:relative;
   height: 30px;
   width: 150px;
+  vertical-align:middle
 }
 
 .col6{
   position:relative;
   height: 30px;
   width: 150px;
+  vertical-align:middle
 }
 
 
@@ -265,37 +275,48 @@ text-shadow:none;
   position:relative;
   height: 30px;
   width: 150px;
+  vertical-align:middle
 }
 
 .el2{
   position:relative;
   height: 30px;
   width: 50px;
+  vertical-align:middle
 }
 
 .el3{
   position:relative;
   height: 30px;
   width: 200px;
+  vertical-align:middle
 }
 
 .el4{
   position:relative;
   height: 30px;
   width: 100px;
+  vertical-align:middle
 }
 
 .el5{
   position:relative;
   height: 30px;
   width: 150px;
+  vertical-align:middle
 }
 
 .el6{
   position:relative;
   height: 30px;
   width: 150px;
+  vertical-align:middle
 }
 
-
+.cabecalho{
+  display: inline-block;
+  padding: 15px;
+  background-color: darkgray;
+  margin:10px
+}
 </style>

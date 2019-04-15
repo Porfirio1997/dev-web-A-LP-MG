@@ -2,10 +2,11 @@
     <div>
         <nav class="navbar navbar-light bg-dark">
             <p class="navbar">{{msg}}</p>
-            <a class="navbar-brand bg-dark botao " href="#/vismapasala">Mapa de Salas</a>
+            <a class="navbar-brand bg-dark botao " href="#/">Mapa de Salas</a>
             <a class="navbar-brand bg-dark botao" href="#/Emprestimos">Empréstimos</a>
             <a class="navbar-brand bg-dark botao" href="#/Pessoas">Pessoal</a>
             <a class="navbar-brand bg-dark botao" href="#/Chaves">Chaves</a>
+            <!-- <a class="navbar-brand bg-dark botao" href="#/Login">Login</a> -->
         </nav>
     </div>
 </template>
