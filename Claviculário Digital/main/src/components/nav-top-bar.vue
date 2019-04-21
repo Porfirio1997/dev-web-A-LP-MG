@@ -6,7 +6,7 @@
             <a class="navbar-brand bg-dark botao" href="#/Emprestimos">Empréstimos</a>
             <a class="navbar-brand bg-dark botao" href="#/Pessoas">Pessoal</a>
             <a class="navbar-brand bg-dark botao" href="#/Chaves">Chaves</a>
-            <!-- <a class="navbar-brand bg-dark botao" href="#/Login">Login</a> -->
+            <a class="navbar-brand bg-dark botao" href="#/Login">Login</a>
         </nav>
     </div>
 </template>

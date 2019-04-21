@@ -87,6 +87,26 @@ export default {
                 "\n telefone : "+tel           
                 )
         },
+
+        buscaempalter(mat){
+          var qtd=0
+            for (var emp in this.emprestimos) {
+            if(this.emprestimos[emp].CNumchave === mat)
+                qtd=qtd+1
+          }
+          if(qtd===1 || qtd===0)
+            return true
+          else 
+            return false
+        },
+
+        buscaemp(mat){
+            for (var emp in this.emprestimos) {
+            if(this.emprestimos[emp].CNumchave === mat)
+              return true
+          }
+          return false
+        },
         buscapessoa(mat){
           for (var pes in this.pessoas) {
             if(this.pessoas[pes].NumMat === mat)
@@ -114,13 +134,17 @@ export default {
           var pessoab = this.buscapessoa(this.NumMat)
           var chaveb = this.buscachave(this.Numchave)
           var horab = this.salvahorario()
+          var empvazio = this.buscaemp(this.Numchave)   
+          
           
             if(pessoab === "matricula não cadastrada")
               alert("matricula não cadastrada")
             else if(chaveb === "chave não cadastrada")
               alert("chave não cadastrada")
-            else{
-              emprestimosRef.push({
+            else if(empvazio){
+              alert("chave emprestada.")
+            }
+            else  {emprestimosRef.push({
                                     PNome:pessoab.Nome,
                                     PNumMat:pessoab.NumMat,
                                     PCargo:pessoab.Cargo,
@@ -150,13 +174,14 @@ export default {
         salvaredicao(obj){
             var pessoab = this.buscapessoa(obj.PNumMat)
             var chaveb = this.buscachave(obj.CNumchave)
+            var chaveatt = this.buscaempalter(obj.CNumchave)
             const key = obj['.key']
 
             if(pessoab === "matricula não cadastrada")
               alert("matricula não cadastrada")
             else if(chaveb === "chave não cadastrada")
               alert("chave não cadastrada")
-            else{
+            else if (chaveatt){
               emprestimosRef.child(key).update({
                                             PNome:obj.PNome,
                                             PNumMat:obj.PNumMat,
@@ -165,7 +190,8 @@ export default {
                                             CNomesala:obj.CNomesala,
                                             CNumchave:obj.CNumchave,
                                             edit:false})
-            }
+            }else 
+              alert('chave já emprestada.')
         },
         confirma(){
             return confirm("Confirmar!");

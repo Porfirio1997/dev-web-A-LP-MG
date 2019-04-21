@@ -6,11 +6,6 @@ import App from './App'
 import VueFire from 'vuefire'
 import router from './router'
 import NavTopBar from '@/components/nav-top-bar'
-import Pessoas from '@/components/Pessoas'
-import Chaves from '@/components/Chaves'
-import Emprestimos from '@/components/Emprestimos'
-import mapaSalas from '@/components/mapaSalas.vue'
-import vismapaSalas from '@/components/VismapaSalas.vue'
 
 Vue.config.productionTip = false
 
@@ -30,42 +25,3 @@ new Vue({
   components: { NavTopBar },
   template: '<NavTopBar/>'
 })
-
-// new Vue({
-//   el: '#pessoal',
-//   router,
-//   components: { Pessoas },
-//   template: '<Pessoal/>'
-// })
-
-// new Vue({
-//   el: '#chaves',
-//   router,
-//   components: { Chaves },
-//   template: '<Chaves/>'
-// })
-
-// new Vue({
-//   el: '#emprestimos',
-//   router,
-//   components: { Emprestimos },
-//   template: '<Emprestimos/>'
-// })
-
-// new Vue({
-//   el: '#mapaSalas',
-//   router,
-//   components: {
-//     mapaSalas
-//   },
-//   template: '<mapaSalas/>'
-// })
-
-// new Vue({
-//   el: '#vismapaSalas',
-//   router,
-//   components: {
-//     vismapaSalas
-//   },
-//   template: '<vismapaSalas/>'
-// })

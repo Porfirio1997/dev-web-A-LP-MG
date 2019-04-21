@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Login from '../components/Login'
+import Login from '../components/Login'
 import Pessoal from '@/components/Pessoas'
 import Chaves from '@/components/Chaves'
 import Emprestimos from '@/components/Emprestimos'
@@ -28,10 +28,10 @@ export default new Router({
       path: '/emprestimos',
       component: Emprestimos
     },
-    // {
-    //   path: '/login',
-    //   component: Login
-    // }
+     {
+       path: '/login',
+       component: Login
+     }
     // {
     //    path: '/mapasala',
     //    component: mapaSalas
