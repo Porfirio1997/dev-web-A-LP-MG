@@ -1,7 +1,8 @@
 <template>
-  <div class="Emprestimo">
+<div>
+  {{logado()}}
+  <div class="Emprestimo" v-if="Token"> 
     <h1>{{ msg }}</h1>
-        
         <div id="area">
           <form @submit.prevent="submeteremprestimo()">
               <label for="NumChave">N° da Chave</label>
@@ -56,10 +57,11 @@
           </div>  
         </div>
   </div>
+</div>
 </template>
 
 <script>
-import { chavesRef,pessoasRef,emprestimosRef } from "../firebase.js";
+import { chavesRef,pessoasRef,emprestimosRef,auth } from "../firebase.js";
 export default {
   name: 'Emprestimos',
   data () {
@@ -68,6 +70,7 @@ export default {
         NumMat:"",
         pessoa:"",
         chave:"",
+        Token:'',
         msg: 'Gerência de relacionamento chave e pessoal '
     }
   },
@@ -77,6 +80,16 @@ export default {
         emprestimos : emprestimosRef
   },
   methods:{
+        logado(){
+              auth.onAuthStateChanged(user =>{
+                  if(user){
+                      this.Token=true
+                      }
+                  else{
+                      this.Token=false
+                      }
+              })
+              },
         modalcontato(emp){
             var nom = emp.PNome
             var tel = emp.PTelefone
@@ -87,9 +100,8 @@ export default {
                 "\n telefone : "+tel           
                 )
         },
-
         buscaempalter(mat){
-          var qtd=0
+          var qtd=0 
             for (var emp in this.emprestimos) {
             if(this.emprestimos[emp].CNumchave === mat)
                 qtd=qtd+1
@@ -199,6 +211,7 @@ export default {
           }
     }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

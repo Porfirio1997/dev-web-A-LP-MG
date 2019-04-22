@@ -1,46 +1,62 @@
 <template>
   <div>
     <h1>{{ msg }}</h1>
-          
-          <div id="area">
-            <!-- <form @submit.prevent="login()"> -->
-            <form>
+      {{logado()}}
+          <div id="area" v-if="Token">
+            <form @submit.prevent="login()">
                   <div class="">
                     <label >Email</label>
                     <input type="text" class="form-control" v-model="Email" placeholder="Email">
                   </div>
                   <div class="">
                     <label >Senha</label>
-                    <input type="text" class="form-control" v-model="Senha" placeholder="Senha">
+                    <input type="password" class="form-control" v-model="Senha" placeholder="Senha">
                   </div>
               <button type="submit" class="form-submit-button">Entrar</button>
             </form>
+          </div>
+          <div id="area" v-else>
+              <button class="fullsize" v-on:click="logout()">Logout</button>
           </div>
   </div>
 </template>
 
 <script>
-// import { chavesRef,authRef } from "../firebase.js";
+import { auth } from "../firebase.js";
 
 export default {
   name: 'login',
   data () {
     return {
+      Token:'',
       Email:"",
       Senha:"",
       msg: 'Login'
     }},
-//     firebase:{
-//     chaves:chavesRef,
-//     auth:authRef
-//   },
-//     methods : {
-//         login(){
-//             this.auth.signInWithEmailAndPassword(this.Email,this.Senha)
-//         }
-//     }
-  
-}
+     methods : {
+         login(){
+             auth.signInWithEmailAndPassword(this.Email,this.Senha)
+             this.Senha=""
+             this.Email=""
+             this.logado()
+             this.$router.push("/")
+         },
+         logado(){
+            auth.onAuthStateChanged(user =>{
+                if(user){
+                    this.Token=false
+                    }
+                else{
+                    this.Token=true
+                    }
+            })
+         },
+         logout(){
+           auth.signOut()
+           this.logado()
+         }
+      }
+     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -71,6 +87,17 @@ img{
   margin:10px
 }
 
+.fullsize{
+  width: 100%;
+  height: 100%;
+  background: #42b983;
+  color: white;
+  position: absolute;
+  left : 0%;
+  font: bold 15px arial, sans-serif;
+  text-shadow:none;
+}
+
 #area
 {
   position:relative;
@@ -79,6 +106,7 @@ img{
   width:320px;
   height:150px;
 }
+
 #area #formulario
 {
   position:absolute;
@@ -95,67 +123,5 @@ left : 40%;
 font: bold 15px arial, sans-serif;
 text-shadow:none;
 }
-
-.col1{
-  position:relative;
-  height: 30px;
-  width: 50px;
-}
-.col2{
-  position:relative;
-  height: 30px;
-  width: 100px;
-}
-.col3{
-  position:relative;
-  height: 30px;
-  width: 200px;
-}
-.col4{
-  position:relative;
-  height: 30px;
-  width: 100px;
-}
-.col5{
-  position:relative;
-  height: 30px;
-  width: 150px;
-}
-
-.el1{
-  position:relative;
-  height: 25px;
-  width: 50px;
-  vertical-align: middle
-}
-.el2{
-  position:relative;
-  height: 25px;
-  width: 100px;
-  vertical-align: middle
-}
-.el3{
-  position:relative;
-  height: 25px;
-  width: 200px;
-  vertical-align: middle
-}
-.el4{
-  position:relative;
-  height: 25px;
-  width: 100px;
-  vertical-align: middle
-}
-.el5{
-  position:relative;
-  height: 25px;
-  width: 150px;
-  vertical-align: middle
-  
-}
-.celula{
-    border: 1px solid black;
-    padding: 5px
-    }
 
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <div class="Pessoal">
+<div>
+  {{logado()}}
+  <div class="Pessoal" v-if="Token">
     <h1>{{ msg }}</h1>
 
         <div id="area">
@@ -65,10 +67,11 @@
         </div>
       </div>
   </div>
+</div>
 </template>
 
 <script>
-import { pessoasRef } from "../firebase.js";
+import { pessoasRef,auth } from "../firebase.js";
 export default {
   name: 'Pessoal',
   data () {
@@ -77,6 +80,7 @@ export default {
       Cargo:"",
       Telefone:"",
       NumMat:"",
+      Token:'',
       msg: 'Gerência de pessoal interno'
     }
   },
@@ -84,6 +88,16 @@ export default {
     pessoas:pessoasRef
   },
   methods:{
+        logado(){
+              auth.onAuthStateChanged(user =>{
+                  if(user){
+                      this.Token=true
+                      }
+                  else{
+                      this.Token=false
+                      }
+              })
+              },
         buscapessoa(mat){
           for (var pes in this.pessoas) {
             if(this.pessoas[pes].NumMat === mat)

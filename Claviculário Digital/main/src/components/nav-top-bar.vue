@@ -1,22 +1,49 @@
 <template>
     <div>
         <nav class="navbar navbar-light bg-dark">
+            {{logado()}}
             <p class="navbar">{{msg}}</p>
-            <a class="navbar-brand bg-dark botao " href="#/">Mapa de Salas</a>
-            <a class="navbar-brand bg-dark botao" href="#/Emprestimos">Empréstimos</a>
-            <a class="navbar-brand bg-dark botao" href="#/Pessoas">Pessoal</a>
-            <a class="navbar-brand bg-dark botao" href="#/Chaves">Chaves</a>
-            <a class="navbar-brand bg-dark botao" href="#/Login">Login</a>
+            <div v-if="Token">
+                <a  class="navbar-brand bg-dark botao " href="#/">Mapa de Salas</a>
+                <a class="navbar-brand bg-dark botao" href="#/Login">Login</a>
+            </div>
+            <div v-else>
+                <a class="navbar-brand bg-dark botao" href="#/Emprestimos">Empréstimos</a>
+                <a class="navbar-brand bg-dark botao" href="#/Pessoas">Pessoal</a>
+                <a class="navbar-brand bg-dark botao" href="#/Chaves">Chaves</a>
+                <a  class="navbar-brand bg-dark botao " href="#/">Mapa de Salas</a>
+                <button class="navbar-brand bg-dark botao " v-on:click="logout()">logout</button>
+            </div>
         </nav>
     </div>
 </template>
 
 <script>
+import { auth } from "../firebase.js";
 export default {
   name: 'NavTopBar',
   data () { 
-      return{ msg : "IFCE - campus Aracati"
+      return{ 
+          msg : "IFCE - campus Aracati",
+          Token:''
     }
+  },
+  methods: {
+        logado(){
+            auth.onAuthStateChanged(user =>{
+                if(user){
+                    this.Token=false
+                    }
+                else{
+                    this.Token=true
+                    }
+            })
+            },
+        logout(){
+            auth.signOut()
+            window.location.reload()
+            this.logado()
+            }
   }
 }
 </script>
@@ -177,7 +204,7 @@ button, input {
 
 button, input, optgroup, select, textarea {
     margin: 0;
-        margin-right: 0px;
+    margin-right: 0px;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;

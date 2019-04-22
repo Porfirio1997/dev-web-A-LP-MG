@@ -1,5 +1,7 @@
 <template>
-  <div class="Chaves">
+<div>
+  {{logado()}}
+  <div class="Chaves" v-if="Token">
     <h1>{{ msg }}</h1>
           <div id="area">
             <form @submit.prevent="submeterchave()">
@@ -50,22 +52,34 @@
         </div>
 
   </div>
+</div>
 </template>
 
 <script>
-import { chavesRef } from "../firebase.js";
+import { chavesRef ,auth} from "../firebase.js";
 export default {
   name: 'Chaves',
   data () {
     return {
       Numchave:"",
       Nomesala:"",
+      Token:'',
       msg: 'Gerênciamento de chaves'
     }},
     firebase:{
     chaves:chavesRef
   },
     methods : {
+        logado(){
+              auth.onAuthStateChanged(user =>{
+                  if(user){
+                      this.Token=true
+                      }
+                  else{
+                      this.Token=false
+                      }
+              })
+              },
         buscachave(num){
           for (var cha in this.chaves) {
             if(this.chaves[cha].Numchave === num)
