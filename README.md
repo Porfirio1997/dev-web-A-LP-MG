@@ -1,6 +1,6 @@
 # dev-web-A-LP-MG
 ## Diretório dedicado ao projeto Claviculário Digital do IFCE Aracati.
-O projeto tem por intuito desenvolver um sistema de gerênciamento de chaves na portaria do campus.
+O projeto tem por intuito desenvolver um sistema de gerenciamento de chaves na portaria do campus.
 
 O sistema gera uma agilização do sistema de obtenção das chaves por parte do porteiro.
 
